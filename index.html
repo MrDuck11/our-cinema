@@ -14,6 +14,7 @@
             display: flex; 
             flex-direction: column; 
             height: 100vh; 
+            height: 100dvh; /* Жестко фиксируем высоту под экраны телефонов */
             overflow: hidden;
         }
 
@@ -24,6 +25,7 @@
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid #232330;
+            flex-shrink: 0;
         }
 
         header h1 { font-size: 15px; color: #ff5277; display: flex; align-items: center; gap: 6px; }
@@ -34,6 +36,7 @@
             background: #16161e;
             gap: 8px;
             border-bottom: 1px solid #232330;
+            flex-shrink: 0;
         }
 
         input[type="text"] {
@@ -58,6 +61,7 @@
             font-size: 12px;
         }
 
+        /* Жесткие пропорции для видео, чтобы оно не съедало весь экран */
         .video-wrapper {
             width: 100%;
             background: #000;
@@ -65,8 +69,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            max-height: 45vh;
-            aspect-ratio: 16 / 9;
+            height: 35vh;
+            flex-shrink: 0;
         }
 
         video, iframe, #yt-player {
@@ -76,13 +80,14 @@
             object-fit: contain;
         }
 
+        /* Секция чата теперь точно займет всё оставшееся место */
         .chat-section {
             flex: 1;
             display: flex;
             flex-direction: column;
             background: #121218;
             overflow: hidden;
-            min-height: 150px;
+            min-height: 0; /* Критически важно для правильного сжатия на flex-контейнерах */
         }
 
         .messages {
@@ -120,6 +125,7 @@
             background: #16161e;
             border-top: 1px solid #232330;
             font-size: 20px;
+            flex-shrink: 0;
         }
 
         .reactions-bar span {
@@ -136,6 +142,7 @@
             padding: 8px 12px;
             background: #16161e;
             gap: 8px;
+            flex-shrink: 0;
         }
 
         .heart-float {
@@ -152,18 +159,17 @@
             100% { opacity: 0; transform: translateY(-150px) scale(1.5); }
         }
     </style>
-    <!-- Официальная библиотека YouTube API -->
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
 
     <header>
         <h1>Наш Кинотеатр 💖</h1>
-        <button class="btn-main" id="mic-btn" onclick="toggleVoice()">🎙 Голос</button>
+        <button class="btn-main" id="mic-btn" onclick="toggleVoice()" style="display:none;">🎙 Голос</button>
     </header>
 
     <div class="url-box">
-        <input type="text" id="video-url" placeholder="Вставь ссылку на YouTube или .mp4...">
+        <input type="text" id="video-url" placeholder="Ссылка на YouTube или .mp4...">
         <button class="btn-main" onclick="loadUrl()">▶ См</button>
         <label style="background:#232330; padding:6px 10px; border-radius:20px; font-size:12px; cursor:pointer; display:flex; align-items:center;">
             📁
@@ -202,18 +208,14 @@
         let ytPlayer = null;
         let isApiReady = false;
         let isRemoteAction = false;
-        let currentVideoId = '';
 
-        // Инициализация плеера YouTube через API
         function onYouTubeIframeAPIReady() {
             isApiReady = true;
             ytPlayer = new YT.Player('yt-player', {
                 height: '100%',
                 width: '100%',
                 playerVars: { 'playsinline': 1, 'controls': 1 },
-                events: {
-                    'onStateChange': onPlayerStateChange
-                }
+                events: { 'onStateChange': onPlayerStateChange }
             });
         }
 
@@ -241,12 +243,9 @@
             }
         }
 
-        // Отслеживаем действия пользователя с плеером YouTube
         function onPlayerStateChange(event) {
             if (isRemoteAction || !ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
-
             const time = ytPlayer.getCurrentTime();
-            // YT.PlayerState.PLAYING = 1, PAUSED = 2
             if (event.data === YT.PlayerState.PLAYING) {
                 socket.emit('video-action', { type: 'play', time: time });
             } else if (event.data === YT.PlayerState.PAUSED) {
@@ -254,26 +253,18 @@
             }
         }
 
-        // Прием команд от сервера (от второго человека)
         socket.on('video-action', (data) => {
             if (!ytPlayer || typeof ytPlayer.seekTo !== 'function') return;
             isRemoteAction = true;
-
             const currentTime = ytPlayer.getCurrentTime();
             if (Math.abs(currentTime - data.time) > 1.0) {
                 ytPlayer.seekTo(data.time, true);
             }
-
-            if (data.type === 'play') {
-                ytPlayer.playVideo();
-            } else if (data.type === 'pause') {
-                ytPlayer.pauseVideo();
-            }
-
+            if (data.type === 'play') ytPlayer.playVideo();
+            else if (data.type === 'pause') ytPlayer.pauseVideo();
             setTimeout(() => { isRemoteAction = false; }, 500);
         });
 
-        // Смена видео у обоих
         socket.on('change-source', (data) => {
             if (data.type === 'yt') {
                 document.getElementById('html-player').style.display = 'none';
@@ -290,7 +281,6 @@
             }
         });
 
-        // Чат и реакции
         function sendMessage(e) {
             e.preventDefault();
             const input = document.getElementById('msg-input');
