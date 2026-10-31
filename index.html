@@ -3,39 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Наш Кинотеатр ❤️</title>
+    <title>🎃 Хэллоуинский Кинотеатр 🦇</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            background: #0d0d11; 
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #08070b; 
             color: #f1f1f5; 
-            display: flex; 
-            flex-direction: column; 
-            height: 100vh; 
-            height: 100dvh; /* Жестко фиксируем высоту под экраны телефонов */
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+        }
+
+        /* Главный контейнер динамически адаптируется под вылезающую клавиатуру */
+        #app-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
             overflow: hidden;
         }
 
         header {
-            background: #16161e;
+            background: #110e1a;
             padding: 8px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid #232330;
+            border-bottom: 2px solid #ff6600;
             flex-shrink: 0;
+            box-shadow: 0 2px 10px rgba(255, 102, 0, 0.2);
         }
 
-        header h1 { font-size: 15px; color: #ff5277; display: flex; align-items: center; gap: 6px; }
+        header h1 { 
+            font-size: 15px; 
+            color: #ff7722; 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            text-shadow: 0 0 8px rgba(255, 119, 34, 0.6); 
+        }
 
         .url-box {
             display: flex;
             padding: 8px 12px;
-            background: #16161e;
+            background: #110e1a;
             gap: 8px;
-            border-bottom: 1px solid #232330;
+            border-bottom: 1px solid #221b30;
             flex-shrink: 0;
         }
 
@@ -43,10 +59,10 @@
             flex: 1;
             padding: 8px 12px;
             border-radius: 20px;
-            border: 1px solid #2e2e3d;
-            background: #0d0d11;
+            border: 1px solid #ff6600;
+            background: #08070b;
             color: #fff;
-            font-size: 13px;
+            font-size: 14px; /* Оптимальный размер против автозума iOS */
             outline: none;
         }
 
@@ -54,14 +70,20 @@
             padding: 6px 14px;
             border: none;
             border-radius: 20px;
-            background: linear-gradient(135deg, #ff4757, #ff6b81);
+            background: linear-gradient(135deg, #ff6600, #cc0000);
             color: white;
             font-weight: bold;
             cursor: pointer;
             font-size: 12px;
+            box-shadow: 0 0 10px rgba(255, 102, 0, 0.4);
+            flex-shrink: 0;
         }
 
-        /* Жесткие пропорции для видео, чтобы оно не съедало весь экран */
+        .btn-magic {
+            background: linear-gradient(135deg, #6600cc, #9900ff) !important;
+            box-shadow: 0 0 10px rgba(153, 0, 255, 0.4) !important;
+        }
+
         .video-wrapper {
             width: 100%;
             background: #000;
@@ -69,8 +91,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 35vh;
+            height: 30vh; /* Слегка уменьшили, чтобы при клавиатуре оставалось больше места */
+            min-height: 180px;
             flex-shrink: 0;
+            border-bottom: 1px solid #221b30;
         }
 
         video, iframe, #yt-player {
@@ -80,14 +104,13 @@
             object-fit: contain;
         }
 
-        /* Секция чата теперь точно займет всё оставшееся место */
         .chat-section {
             flex: 1;
             display: flex;
             flex-direction: column;
-            background: #121218;
+            background: #0c0a12;
             overflow: hidden;
-            min-height: 0; /* Критически важно для правильного сжатия на flex-контейнерах */
+            min-height: 0;
         }
 
         .messages {
@@ -97,10 +120,11 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .message {
-            background: #1d1d27;
+            background: #181324;
             padding: 6px 12px;
             border-radius: 12px;
             font-size: 13px;
@@ -108,22 +132,25 @@
             align-self: flex-start;
             word-break: break-word;
             border-bottom-left-radius: 4px;
+            border: 1px solid #281e3d;
         }
 
         .message.my-msg {
             align-self: flex-end;
-            background: #ff4757;
+            background: #ff6600;
             color: white;
             border-bottom-left-radius: 12px;
             border-bottom-right-radius: 4px;
+            border: none;
+            box-shadow: 0 0 8px rgba(255, 102, 0, 0.3);
         }
 
         .reactions-bar {
             display: flex;
             justify-content: space-around;
             padding: 6px;
-            background: #16161e;
-            border-top: 1px solid #232330;
+            background: #110e1a;
+            border-top: 1px solid #221b30;
             font-size: 20px;
             flex-shrink: 0;
         }
@@ -140,64 +167,103 @@
         .chat-input {
             display: flex;
             padding: 8px 12px;
-            background: #16161e;
+            background: #110e1a;
             gap: 8px;
             flex-shrink: 0;
         }
 
-        .heart-float {
+        .ghost-float {
             position: fixed;
             bottom: 70px;
             font-size: 28px;
-            animation: floatUp 2s ease-out forwards;
+            animation: floatUpSpooky 2.5s ease-out forwards;
             pointer-events: none;
             z-index: 999;
         }
 
-        @keyframes floatUp {
-            0% { opacity: 1; transform: translateY(0) scale(1); }
-            100% { opacity: 0; transform: translateY(-150px) scale(1.5); }
+        @keyframes floatUpSpooky {
+            0% { opacity: 1; transform: translateY(0) scale(0.8) rotate(0deg); }
+            50% { transform: translateY(-100px) scale(1.3) rotate(15deg); }
+            100% { opacity: 0; transform: translateY(-220px) scale(1) rotate(-15deg); }
         }
+
+        #movie-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: #151122;
+            border: 2px solid #ff6600;
+            padding: 20px;
+            border-radius: 16px;
+            max-width: 320px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(255, 102, 0, 0.4);
+        }
+        .modal-content h3 { color: #ff7722; margin-bottom: 10px; }
+        .modal-content p { font-size: 14px; margin-bottom: 15px; color: #ddd; }
     </style>
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
 
-    <header>
-        <h1>Наш Кинотеатр 💖</h1>
-        <button class="btn-main" id="mic-btn" onclick="toggleVoice()" style="display:none;">🎙 Голос</button>
-    </header>
+    <div id="app-container">
+        <header>
+            <h1>🎃 Наш Хэллоуин 🦇</h1>
+            <div style="display: flex; gap: 6px;">
+                <button class="btn-main btn-magic" onclick="suggestMovie()">🔮 Фильм</button>
+                <button class="btn-main" id="mic-btn" onclick="toggleVoice()">🎙 Голос</button>
+            </div>
+        </header>
 
-    <div class="url-box">
-        <input type="text" id="video-url" placeholder="Ссылка на YouTube или .mp4...">
-        <button class="btn-main" onclick="loadUrl()">▶ См</button>
-        <label style="background:#232330; padding:6px 10px; border-radius:20px; font-size:12px; cursor:pointer; display:flex; align-items:center;">
-            📁
-            <input type="file" id="file-input" accept="video/*" style="display:none" onchange="loadLocalFile(event)">
-        </label>
-    </div>
-
-    <div class="video-wrapper">
-        <div id="yt-player"></div>
-        <video id="html-player" controls playsinline webkit-playsinline style="display:none;"></video>
-    </div>
-
-    <div class="chat-section">
-        <div class="messages" id="messages"></div>
-
-        <div class="reactions-bar">
-            <span onclick="sendReaction('❤️')">❤️</span>
-            <span onclick="sendReaction('💖')">💖</span>
-            <span onclick="sendReaction('😂')">😂</span>
-            <span onclick="sendReaction('🍿')">🍿</span>
-            <span onclick="sendReaction('🥺')">🥺</span>
+        <div class="url-box">
+            <input type="text" id="video-url" placeholder="Ссылка на YouTube или .mp4...">
+            <button class="btn-main" onclick="loadUrl()">▶ См</button>
+            <label style="background:#221b30; padding:6px 10px; border-radius:20px; font-size:12px; cursor:pointer; display:flex; align-items:center; border: 1px solid #ff6600;">
+                📁
+                <input type="file" id="file-input" accept="video/*" style="display:none" onchange="loadLocalFile(event)">
+            </label>
         </div>
 
-        <form class="chat-input" onsubmit="sendMessage(event)">
-            <input type="text" id="msg-input" placeholder="Написать сообщение...">
-            <button class="btn-main" type="submit">></button>
-        </form>
+        <div class="video-wrapper">
+            <div id="yt-player"></div>
+            <video id="html-player" controls playsinline webkit-playsinline style="display:none;"></video>
+        </div>
+
+        <div class="chat-section">
+            <div class="messages" id="messages"></div>
+
+            <div class="reactions-bar">
+                <span onclick="sendReaction('🎃')">🎃</span>
+                <span onclick="sendReaction('👻')">👻</span>
+                <span onclick="sendReaction('🦇')">🦇</span>
+                <span onclick="sendReaction('🍬')">🍬</span>
+                <span onclick="sendReaction('💀')">💀</span>
+            </div>
+
+            <form class="chat-input" onsubmit="sendMessage(event)">
+                <input type="text" id="msg-input" placeholder="Написать заклинание..." onfocus="scrollToBottom()">
+                <button class="btn-main" type="submit">></button>
+            </form>
+        </div>
     </div>
+
+    <div id="movie-modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h3>🔮 Магический шар подсказывает:</h3>
+            <p id="movie-text">Нажмите кнопку, чтобы узнать фильм!</p>
+            <button class="btn-main" onclick="closeModal()">Понятно, колдуем дальше!</button>
+        </div>
+    </div>
+
+    <audio id="remote-audio" autoplay></audio>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
@@ -281,22 +347,49 @@
             }
         });
 
+        const movies = [
+            "👻 «Коралина в Стране Кошмаров» — жутко красивая сказка для уютного вечера под пледом.",
+            "🦇 «Труп невесты» Тима Бёртона — идеально атмосферно и романтично.",
+            "🎃 «Сонная лощина» — туман, мистика и потрясающий вайб Хэллоуина.",
+            "💀 «Уэнздей» (пара серий) — стильно, с черным юмором и загадками.",
+            "🍬 Любой страшный выпуск любимого шоу или блогера на YouTube!"
+        ];
+
+        function suggestMovie() {
+            const randomMovie = movies[Math.floor(Math.random() * movies.length)];
+            document.getElementById('movie-text').textContent = randomMovie;
+            document.getElementById('movie-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('movie-modal').style.display = 'none';
+        }
+
+        // Автопрокрутка вниз при фокусе клавиатуры
+        function scrollToBottom() {
+            setTimeout(() => {
+                const msgContainer = document.getElementById('messages');
+                msgContainer.scrollTop = msgContainer.scrollHeight;
+            }, 300);
+        }
+
         function sendMessage(e) {
             e.preventDefault();
             const input = document.getElementById('msg-input');
             if (input.value.trim()) {
                 socket.emit('chat-message', { text: input.value, id: socket.id });
                 input.value = '';
+                scrollToBottom();
             }
         }
 
         function sendReaction(emoji) {
             socket.emit('chat-message', { text: emoji, id: socket.id, isReaction: true });
-            spawnHeart(emoji);
+            spawnGhost(emoji);
         }
 
         socket.on('chat-message', (data) => {
-            if (data.isReaction) spawnHeart(data.text);
+            if (data.isReaction) spawnGhost(data.text);
             const msgDiv = document.createElement('div');
             msgDiv.className = 'message ' + (data.id === socket.id ? 'my-msg' : '');
             msgDiv.textContent = data.text;
@@ -305,32 +398,76 @@
             msgContainer.scrollTop = msgContainer.scrollHeight;
         });
 
-        function spawnHeart(emoji) {
-            const heart = document.createElement('div');
-            heart.className = 'heart-float';
-            heart.textContent = emoji;
-            heart.style.left = (Math.random() * 60 + 20) + '%';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 2000);
+        function spawnGhost(emoji) {
+            const ghost = document.createElement('div');
+            ghost.className = 'ghost-float';
+            ghost.textContent = emoji;
+            ghost.style.left = (Math.random() * 60 + 20) + '%';
+            document.body.appendChild(ghost);
+            setTimeout(() => ghost.remove(), 2500);
         }
 
         let localStream;
+        let peerConnection;
+        const servers = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
+
         async function toggleVoice() {
             const btn = document.getElementById('mic-btn');
             if (!localStream) {
                 try {
-                    localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    localStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
                     btn.textContent = "🎙 Вкл";
                     btn.style.background = "#2ed573";
-                } catch (err) {
-                    alert("Нет доступа к микрофону");
-                }
+                    socket.emit('voice-join', roomId);
+                } catch (err) { alert("Нет доступа к микрофону."); }
             } else {
                 localStream.getTracks().forEach(track => track.stop());
                 localStream = null;
+                if (peerConnection) { peerConnection.close(); peerConnection = null; }
                 btn.textContent = "🎙 Голос";
-                btn.style.background = "linear-gradient(135deg, #ff4757, #ff6b81)";
+                btn.style.background = "linear-gradient(135deg, #ff6600, #cc0000)";
             }
+        }
+
+        socket.on('voice-join', async () => {
+            if (!localStream) return;
+            peerConnection = createPeerConnection();
+            const offer = await peerConnection.createOffer();
+            await peerConnection.setLocalDescription(offer);
+            socket.emit('voice-offer', { offer, roomId });
+        });
+
+        socket.on('voice-offer', async (offer) => {
+            if (!localStream) {
+                try {
+                    localStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+                    document.getElementById('mic-btn').textContent = "🎙 Вкл";
+                    document.getElementById('mic-btn').style.background = "#2ed573";
+                } catch (e) { return; }
+            }
+            peerConnection = createPeerConnection();
+            await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+            const answer = await peerConnection.createAnswer();
+            await peerConnection.setLocalDescription(answer);
+            socket.emit('voice-answer', { answer, roomId });
+        });
+
+        socket.on('voice-answer', async (answer) => {
+            if (peerConnection) { await peerConnection.setRemoteDescription(new RTCSessionDescription(answer)); }
+        });
+
+        socket.on('voice-candidate', async (candidate) => {
+            if (peerConnection && candidate) { await peerConnection.addIceCandidate(new RTCIceCandidate(candidate)); }
+        });
+
+        function createPeerConnection() {
+            const pc = new RTCPeerConnection(servers);
+            localStream.getTracks().forEach(track => pc.addTrack(track, localStream));
+            pc.ontrack = (event) => { document.getElementById('remote-audio').srcObject = event.streams[0]; };
+            pc.onicecandidate = (event) => {
+                if (event.candidate) { socket.emit('voice-candidate', { candidate: event.candidate, roomId }); }
+            };
+            return pc;
         }
     </script>
 </body>
