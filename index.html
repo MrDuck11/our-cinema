@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🎃 Хэллоуинский Кинотеатр 🦇</title>
+    <title>Наш Кинотеатр ❤️</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
@@ -11,7 +11,7 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background: #08070b; 
+            background: #0d0d11; 
             color: #f1f1f5; 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
         }
@@ -29,31 +29,29 @@
         }
 
         header {
-            background: #110e1a;
+            background: #16161e;
             padding: 8px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 2px solid #ff6600;
+            border-bottom: 1px solid #232330;
             flex-shrink: 0;
-            box-shadow: 0 2px 10px rgba(255, 102, 0, 0.2);
         }
 
         header h1 { 
             font-size: 15px; 
-            color: #ff7722; 
+            color: #ff5277; 
             display: flex; 
             align-items: center; 
             gap: 6px; 
-            text-shadow: 0 0 8px rgba(255, 119, 34, 0.6); 
         }
 
         .url-box {
             display: flex;
             padding: 8px 12px;
-            background: #110e1a;
+            background: #16161e;
             gap: 8px;
-            border-bottom: 1px solid #221b30;
+            border-bottom: 1px solid #232330;
             flex-shrink: 0;
         }
 
@@ -61,8 +59,8 @@
             flex: 1;
             padding: 8px 12px;
             border-radius: 20px;
-            border: 1px solid #ff6600;
-            background: #08070b;
+            border: 1px solid #2e2e3d;
+            background: #0d0d11;
             color: #fff;
             font-size: 14px;
             outline: none;
@@ -72,20 +70,16 @@
             padding: 6px 14px;
             border: none;
             border-radius: 20px;
-            background: linear-gradient(135deg, #ff6600, #cc0000);
+            background: linear-gradient(135deg, #ff4757, #ff6b81);
             color: white;
             font-weight: bold;
             cursor: pointer;
             font-size: 12px;
-            box-shadow: 0 0 10px rgba(255, 102, 0, 0.4);
             flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(255, 71, 87, 0.3);
         }
 
-        .btn-magic {
-            background: linear-gradient(135deg, #880000, #ff0000) !important;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5) !important;
-        }
-
+        /* Видео теперь строго зафиксировано сверху и не дергается */
         .video-wrapper {
             width: 100%;
             background: #000;
@@ -96,7 +90,7 @@
             height: 32vh;
             min-height: 180px;
             flex-shrink: 0;
-            border-bottom: 1px solid #221b30;
+            border-bottom: 1px solid #232330;
         }
 
         video, iframe, #yt-player {
@@ -110,7 +104,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            background: #0c0a12;
+            background: #121218;
             overflow: hidden;
             min-height: 0;
         }
@@ -126,7 +120,7 @@
         }
 
         .message {
-            background: #181324;
+            background: #1d1d27;
             padding: 6px 12px;
             border-radius: 12px;
             font-size: 13px;
@@ -134,17 +128,14 @@
             align-self: flex-start;
             word-break: break-word;
             border-bottom-left-radius: 4px;
-            border: 1px solid #281e3d;
         }
 
         .message.my-msg {
             align-self: flex-end;
-            background: #ff6600;
+            background: #ff4757;
             color: white;
             border-bottom-left-radius: 12px;
             border-bottom-right-radius: 4px;
-            border: none;
-            box-shadow: 0 0 8px rgba(255, 102, 0, 0.3);
         }
 
         .reactions-bar {
@@ -152,8 +143,8 @@
             justify-content: space-around;
             align-items: center;
             padding: 6px;
-            background: #110e1a;
-            border-top: 1px solid #221b30;
+            background: #16161e;
+            border-top: 1px solid #232330;
             font-size: 20px;
             flex-shrink: 0;
         }
@@ -169,9 +160,9 @@
         }
 
         .btn-settings {
-            background: #221b30;
-            border: 1px solid #ff6600;
-            color: #ff7722;
+            background: #232330;
+            border: 1px solid #2e2e3d;
+            color: #ff5277;
             border-radius: 50%;
             width: 28px;
             height: 28px;
@@ -185,49 +176,48 @@
         .chat-input {
             display: flex;
             padding: 8px 12px;
-            background: #110e1a;
+            background: #16161e;
             gap: 8px;
             flex-shrink: 0;
         }
 
-        .ghost-float {
+        .heart-float {
             position: fixed;
             bottom: 70px;
             font-size: 28px;
-            animation: floatUpSpooky 2.5s ease-out forwards;
+            animation: floatUp 2s ease-out forwards;
             pointer-events: none;
             z-index: 999;
         }
 
-        @keyframes floatUpSpooky {
-            0% { opacity: 1; transform: translateY(0) scale(0.8) rotate(0deg); }
-            50% { transform: translateY(-100px) scale(1.3) rotate(15deg); }
-            100% { opacity: 0; transform: translateY(-220px) scale(1) rotate(-15deg); }
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-150px) scale(1.5); }
         }
 
-        /* Общие модальные окна */
+        /* Модальное окно настроек эмодзи */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0,0,0,0.8);
             z-index: 2000;
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
         .modal-content {
-            background: #151122;
-            border: 2px solid #ff6600;
+            background: #16161e;
+            border: 1px solid #2e2e3d;
             padding: 20px;
             border-radius: 16px;
             max-width: 320px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 0 25px rgba(255, 102, 0, 0.5);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
-        .modal-content h3 { color: #ff7722; margin-bottom: 10px; }
-        .modal-content p { font-size: 14px; margin-bottom: 15px; color: #ddd; line-height: 1.4; }
+        .modal-content h3 { color: #ff5277; margin-bottom: 10px; font-size: 16px; }
+        .modal-content p { font-size: 13px; margin-bottom: 15px; color: #aaa; }
         
         .emoji-inputs {
             display: flex;
@@ -240,8 +230,8 @@
             height: 45px;
             text-align: center;
             font-size: 22px;
-            background: #08070b;
-            border: 1px solid #ff6600;
+            background: #0d0d11;
+            border: 1px solid #2e2e3d;
             border-radius: 10px;
             color: white;
             outline: none;
@@ -253,17 +243,14 @@
 
     <div id="app-container">
         <header>
-            <h1>🎃 Наш Хэллоуин 🦇</h1>
-            <div style="display: flex; gap: 6px;">
-                <button class="btn-main btn-magic" onclick="suggestMovie()">🩸 Хоррор</button>
-                <button class="btn-main" id="mic-btn" onclick="toggleVoice()">🎙 Голос</button>
-            </div>
+            <h1>Наш Кинотеатр 💖</h1>
+            <button class="btn-main" id="mic-btn" onclick="toggleVoice()">🎙 Голос</button>
         </header>
 
         <div class="url-box">
             <input type="text" id="video-url" placeholder="Ссылка на YouTube или .mp4..." autocomplete="off" autocorrect="off" spellcheck="false">
             <button class="btn-main" onclick="loadUrl()">▶ См</button>
-            <label style="background:#221b30; padding:6px 10px; border-radius:20px; font-size:12px; cursor:pointer; display:flex; align-items:center; border: 1px solid #ff6600;">
+            <label style="background:#232330; padding:6px 10px; border-radius:20px; font-size:12px; cursor:pointer; display:flex; align-items:center;">
                 📁
                 <input type="file" id="file-input" accept="video/*" style="display:none" onchange="loadLocalFile(event)">
             </label>
@@ -277,42 +264,30 @@
         <div class="chat-section">
             <div class="messages" id="messages"></div>
 
-            <!-- Динамическая панель реакций (слоты настраиваются пользователем) -->
-            <div class="reactions-bar" id="reactions-bar">
-                <!-- Сюда автоматически вставятся 5 смайликов + кнопка настроек -->
-            </div>
+            <!-- Настраиваемая панель эмодзи -->
+            <div class="reactions-bar" id="reactions-bar"></div>
 
             <form class="chat-input" onsubmit="sendMessage(event)">
-                <input type="text" id="msg-input" placeholder="Страшное сообщение..." autocomplete="off" autocorrect="off" spellcheck="false">
+                <input type="text" id="msg-input" placeholder="Написать сообщение..." autocomplete="off" autocorrect="off" spellcheck="false" onfocus="handleFocus()">
                 <button class="btn-main" type="submit">></button>
             </form>
         </div>
     </div>
 
-    <!-- Модалка генератора хорроров -->
-    <div id="movie-modal" class="modal" onclick="closeModal('movie-modal')">
+    <!-- Модалка настройки эмодзи -->
+    <div id="emoji-modal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <h3>🩸 Генератор Жутких Хорроров</h3>
-            <p id="movie-text">Нажми кнопку, чтобы выбрать ужастик!</p>
-            <button class="btn-main" onclick="suggestMovie()" style="margin-bottom: 8px;">🎲 Другой ужастик</button><br>
-            <button class="btn-main" onclick="closeModal('movie-modal')" style="background: #333;">Закрыть</button>
-        </div>
-    </div>
-
-    <!-- Модалка настройки 5 эмодзи -->
-    <div id="emoji-modal" class="modal" onclick="closeModal('emoji-modal')">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <h3>⚙️ Твои 5 смайликов</h3>
-            <p>Введи по одному любимому эмодзи в каждое поле:</p>
+            <h3>⚙️ Ваши 5 смайликов</h3>
+            <p>Выберите любимые эмодзи для панели:</p>
             <div class="emoji-inputs">
-                <input type="text" maxlength="2" class="e-slot" value="🎃">
-                <input type="text" maxlength="2" class="e-slot" value="👻">
-                <input type="text" maxlength="2" class="e-slot" value="💀">
-                <input type="text" maxlength="2" class="e-slot" value="🩸">
-                <input type="text" maxlength="2" class="e-slot" value="🔪">
+                <input type="text" maxlength="2" class="e-slot" value="❤️">
+                <input type="text" maxlength="2" class="e-slot" value="💖">
+                <input type="text" maxlength="2" class="e-slot" value="😂">
+                <input type="text" maxlength="2" class="e-slot" value="🍿">
+                <input type="text" maxlength="2" class="e-slot" value="🥺">
             </div>
             <button class="btn-main" onclick="saveEmojis()" style="margin-bottom: 8px; width: 100%;">Сохранить</button><br>
-            <button class="btn-main" onclick="closeModal('emoji-modal')" style="background: #333; width: 100%;">Отмена</button>
+            <button class="btn-main" onclick="closeModal()" style="background: #2e2e3d; width: 100%;">Отмена</button>
         </div>
     </div>
 
@@ -400,10 +375,10 @@
             }
         });
 
-        // --- УПРАВЛЕНИЕ СВОИМИ 5 ЭМОДЗИ ---
+        // Управление пользовательскими смайликами
         function getSavedEmojis() {
             const saved = localStorage.getItem('my_custom_emojis');
-            return saved ? JSON.parse(saved) : ['🎃', '👻', '💀', '🩸', '🔪'];
+            return saved ? JSON.parse(saved) : ['❤️', '💖', '😂', '🍿', '🥺'];
         }
 
         function renderReactionsBar() {
@@ -422,7 +397,7 @@
             const emojis = getSavedEmojis();
             const inputs = document.querySelectorAll('.e-slot');
             inputs.forEach((input, index) => {
-                input.value = emojis[index] || '🎃';
+                input.value = emojis[index] || '❤️';
             });
             document.getElementById('emoji-modal').style.display = 'flex';
         }
@@ -438,49 +413,25 @@
             if (newEmojis.length > 0) {
                 localStorage.setItem('my_custom_emojis', JSON.stringify(newEmojis.slice(0, 5)));
                 renderReactionsBar();
-                closeModal('emoji-modal');
+                closeModal();
             } else {
                 alert("Введите хотя бы один смайлик!");
             }
         }
 
-        // При загрузке страницы сразу отрисовываем сохраненные смайлики
+        function closeModal() {
+            document.getElementById('emoji-modal').style.display = 'none';
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
             renderReactionsBar();
         });
 
-        // --- БАЗА ХОРРОРОВ ---
-        const horrorMovies = [
-            "🩸 «Заклятие» (The Conjuring) — Классика жутких демонов и реальных расследований.",
-            "👁️ «Астрал» (Insidious) — Легендарный ужастик про потусторонний мир и скримеры.",
-            "💀 «Реинкарнация» (Hereditary) — Один из самых тяжелых и пугающих психологических хорроров.",
-            "🔪 «Сияние» (The Shining) — Безумие в изолированном отеле зимой.",
-            "🧟 «Синистер» (Sinister) — Находка старых пленок с жуткими ритуалами.",
-            "🩸 «Звонок» (The Ring) — Проклятая кассета и девочка из колодца.",
-            "💀 «Оно» (It) — Демонический клоун Пеннивайз в городке Дерри.",
-            "🕯️ «Заклятие 2» — Очень страшный демонический монахиня Валак.",
-            "👁️ «Тихое место» (A Quiet Place) — Монстры, реагирующие на малейший звук.",
-            "🩸 «Варвар» (Barbarian) — Безумный твист в подвале арендованного дома.",
-            "🔪 «Крик» (Scream) — Легендарный слэшер с маской Призрачного лица.",
-            "🧟 «Оно идет за тобой» (It Follows) — Неотвратимое проклятие, которое постоянно идет за тобой.",
-            "🕯️ «Паранормальное явление» — Реалистичные ночные записи из дома с призраком.",
-            "🩸 «Очи» (Smile) — Проклятая жуть с пугающими улыбками на людях.",
-            "💀 «Искатели могил» — Жуткие паранормальные явления в заброшенной психбольнице.",
-            "🔪 «Техасская резня бензопилой» — Классический жестокий хоррор.",
-            "🕯️ «Проклятие Анабель» — История куклы, одержимой демоном.",
-            "👁️ «Прочь» (Get Out) — Напряженный психологический триллер-хоррор.",
-            "🩸 «Солнцестояние» (Midsommar) — Пугающий культ под ярким дневным солнцем.",
-            "🧟 «Поезд в Пусан» — Бешеный и невероятно динамичный зомби-хоррор."
-        ];
-
-        function suggestMovie() {
-            const randomMovie = horrorMovies[Math.floor(Math.random() * horrorMovies.length)];
-            document.getElementById('movie-text').textContent = randomMovie;
-            document.getElementById('movie-modal').style.display = 'flex';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
+        function handleFocus() {
+            setTimeout(() => {
+                const msgContainer = document.getElementById('messages');
+                msgContainer.scrollTop = msgContainer.scrollHeight;
+            }, 250);
         }
 
         function sendMessage(e) {
@@ -496,11 +447,11 @@
 
         function sendReaction(emoji) {
             socket.emit('chat-message', { text: emoji, id: socket.id, isReaction: true });
-            spawnGhost(emoji);
+            spawnHeart(emoji);
         }
 
         socket.on('chat-message', (data) => {
-            if (data.isReaction) spawnGhost(data.text);
+            if (data.isReaction) spawnHeart(data.text);
             const msgDiv = document.createElement('div');
             msgDiv.className = 'message ' + (data.id === socket.id ? 'my-msg' : '');
             msgDiv.textContent = data.text;
@@ -509,13 +460,13 @@
             msgContainer.scrollTop = msgContainer.scrollHeight;
         });
 
-        function spawnGhost(emoji) {
-            const ghost = document.createElement('div');
-            ghost.className = 'ghost-float';
-            ghost.textContent = emoji;
-            ghost.style.left = (Math.random() * 60 + 20) + '%';
-            document.body.appendChild(ghost);
-            setTimeout(() => ghost.remove(), 2500);
+        function spawnHeart(emoji) {
+            const heart = document.createElement('div');
+            heart.className = 'heart-float';
+            heart.textContent = emoji;
+            heart.style.left = (Math.random() * 60 + 20) + '%';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 2000);
         }
 
         let localStream;
@@ -536,7 +487,7 @@
                 localStream = null;
                 if (peerConnection) { peerConnection.close(); peerConnection = null; }
                 btn.textContent = "🎙 Голос";
-                btn.style.background = "linear-gradient(135deg, #ff6600, #cc0000)";
+                btn.style.background = "linear-gradient(135deg, #ff4757, #ff6b81)";
             }
         }
 
