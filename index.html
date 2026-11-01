@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=resizes-content">
     <title>Наш Кинотеатр ❤️</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -16,16 +16,18 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
         }
 
+        /* Жестко фиксируем интерфейс на экране телефона, запрещая мобильному браузеру дергать общую высоту */
         #app-container {
             display: flex;
             flex-direction: column;
-            width: 100%;
-            height: 100vh;
-            height: 100dvh;
-            overflow: hidden;
             position: fixed;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
 
         header {
@@ -79,7 +81,7 @@
             box-shadow: 0 2px 8px rgba(255, 71, 87, 0.3);
         }
 
-        /* Видео теперь строго зафиксировано сверху и не дергается */
+        /* Видео теперь имеет абсолютную статичную высоту и не сжимается клавиатурой */
         .video-wrapper {
             width: 100%;
             background: #000;
@@ -87,8 +89,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 32vh;
-            min-height: 180px;
+            height: 220px; /* Фиксированная высота плеера, одинаковая на всех телефонах */
             flex-shrink: 0;
             border-bottom: 1px solid #232330;
         }
@@ -256,6 +257,7 @@
             </label>
         </div>
 
+        <!-- Видео теперь закреплено сверху и имеет неизменяемую высоту -->
         <div class="video-wrapper">
             <div id="yt-player"></div>
             <video id="html-player" controls playsinline webkit-playsinline style="display:none;"></video>
@@ -264,7 +266,6 @@
         <div class="chat-section">
             <div class="messages" id="messages"></div>
 
-            <!-- Настраиваемая панель эмодзи -->
             <div class="reactions-bar" id="reactions-bar"></div>
 
             <form class="chat-input" onsubmit="sendMessage(event)">
@@ -274,7 +275,6 @@
         </div>
     </div>
 
-    <!-- Модалка настройки эмодзи -->
     <div id="emoji-modal" class="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3>⚙️ Ваши 5 смайликов</h3>
@@ -375,7 +375,6 @@
             }
         });
 
-        // Управление пользовательскими смайликами
         function getSavedEmojis() {
             const saved = localStorage.getItem('my_custom_emojis');
             return saved ? JSON.parse(saved) : ['❤️', '💖', '😂', '🍿', '🥺'];
@@ -431,7 +430,7 @@
             setTimeout(() => {
                 const msgContainer = document.getElementById('messages');
                 msgContainer.scrollTop = msgContainer.scrollHeight;
-            }, 250);
+            }, 200);
         }
 
         function sendMessage(e) {
@@ -474,7 +473,7 @@
         const servers = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
 
         async function toggleVoice() {
-            const btn = document.getElementById('mic-btn');
+            let btn = document.getElementById('mic-btn');
             if (!localStream) {
                 try {
                     localStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
@@ -515,7 +514,7 @@
         });
 
         socket.on('voice-answer', async (answer) => {
-            if (peerConnection) { await peerConnection.setRemoteDescription(new RTCSessionDescription(answer)); }
+            if (peerConnection) { await peerConnection.setRootDescription(new RTCSessionDescription(answer)); }
         });
 
         socket.on('voice-candidate', async (candidate) => {
